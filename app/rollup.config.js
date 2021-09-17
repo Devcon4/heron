@@ -3,8 +3,8 @@ import commonjs from '@rollup/plugin-commonjs';
 import html from '@rollup/plugin-html';
 import resolve from '@rollup/plugin-node-resolve';
 import copy from 'rollup-plugin-copy';
-import del from 'rollup-plugin-delete';
 import dev from 'rollup-plugin-dev';
+import livereload from 'rollup-plugin-livereload';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
 import { terser } from 'rollup-plugin-terser';
 import { indexHtml } from './src/indexHtml.js';
@@ -25,7 +25,6 @@ const config = {
     chunkFileNames: '[name].[hash].js',
   },
   plugins: [
-    del({ targets: 'dist/*' }),
     html({ template: (opts) => indexHtml(opts, ['app.']) }),
     minifyHTML(),
     copy(copyConfig),
@@ -50,7 +49,10 @@ if (!isDevelopment) {
   config.plugins = [
     ...config.plugins,
     terser({}),
-    dev({ dirs: ['dist'], host: 'localhost', spa: './index.html' }),
+    dev({ dirs: ['dist'], host: 'localhost', spa: './index.html',  }),
+    livereload({
+      watch: ['dist'],
+    }),
   ];
 }
 

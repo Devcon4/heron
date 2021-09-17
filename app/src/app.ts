@@ -9,9 +9,20 @@ import {
 import { IRoute, queryParentRouterSlot, RouterSlot } from 'router-slot';
 import { flexHostStyles, globalStyles } from './globalStyles';
 
-const routes: Array<IRoute> = [];
+const routes: Array<IRoute> = [
+  {
+    path: 'gallery',
+    component: async () => (await import('./components/heroList.component')).HeroListElement
+  },
+  {
+    path: '**',
+    redirectTo: 'gallery',
+    pathMatch: 'full'
+  },
+  
+];
 
-@customElement('hero-app')
+@customElement('hro-app')
 export class AppElement extends LitElement {
   @query('router-slot') $routerSlot: RouterSlot;
 
@@ -25,9 +36,8 @@ export class AppElement extends LitElement {
   }
 
   render() {
-    return html`<div cass="app hero-flex">
-      <h1 class="text">I Work still!</h1>
-      <router-slot class="hero-flex"></router-slot>
+    return html`<div class="app hro-flex">
+      <router-slot class="hro-flex"></router-slot>
     </div>`;
   }
 

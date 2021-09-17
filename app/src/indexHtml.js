@@ -64,63 +64,63 @@ export const indexHtml = (
             --light: var(--on);
             --dark: var(--off);
             
-            --heroLightShade: var(--light, var(--hero4)) var(--dark, var(--hero2));
-            --heroLightAccent: var(--light, var(--hero5)) var(--dark, var(--hero1));
-            --heroMain: var(--light, var(--hero9)) var(--dark, var(--hero9));
-            --heroDarkAccent: var(--light, var(--hero2)) var(--dark, var(--hero4));
-            --heroDarkShade: var(--light, var(--hero1)) var(--dark, var(--hero5));
-            --heroText: var(--light, var(--hero2)) var(--dark, var(--hero4));
+            --hroLightShade: var(--light, var(--hro4)) var(--dark, var(--hro2));
+            --hroLightAccent: var(--light, var(--hro5)) var(--dark, var(--hro1));
+            --hroMain: var(--light, var(--hro9)) var(--dark, var(--hro9));
+            --hroDarkAccent: var(--light, var(--hro2)) var(--dark, var(--hro4));
+            --hroDarkShade: var(--light, var(--hro1)) var(--dark, var(--hro5));
+            --hroText: var(--light, var(--hro2)) var(--dark, var(--hro4));
 
-            --mdc-theme-primary: var(--heroMain);
-            --mdc-theme-secondary: var(--heroDarkAccent);
-            --mdc-theme-surface: var(--heroLightAccent);
-            --mdc-theme-background: var(--heroLightShade);
+            --mdc-theme-primary: var(--hroMain);
+            --mdc-theme-secondary: var(--hroDarkAccent);
+            --mdc-theme-surface: var(--hroLightAccent);
+            --mdc-theme-background: var(--hroLightShade);
 
-            /* Raw are RGB versions. Useful to compose more complex colors ex: rgba(var(--hero0-raw), .2) */
-            --hero0-raw: 74, 75, 81;
-            --hero1-raw: 86, 87, 94;
-            --hero2-raw: 51, 52, 56;
-            --hero3-raw: 32, 34, 36;
-            --hero4-raw: 240, 247, 252;
-            --hero5-raw: 218, 226, 232;
-            --hero6-raw: 170, 181, 191;
-            --hero7-raw: 242, 79, 19;
-            --hero8-raw: 242, 190, 34;
-            --hero9-raw: 242, 79, 19;
-            --hero10-raw: 242, 79, 19;
-            --hero11-raw: 230, 197, 103;
-            --hero12-raw: 68, 126, 179;
-            --hero13-raw: 161, 205, 68;
-            --hero14-raw: 217, 56, 48;
-            --hero15-raw: 245, 133, 127;
+            /* Raw are RGB versions. Useful to compose more complex colors ex: rgba(var(--hro0-raw), .2) */
+            --hro0-raw: 74, 75, 81;
+            --hro1-raw: 86, 87, 94;
+            --hro2-raw: 51, 52, 56;
+            --hro3-raw: 32, 34, 36;
+            --hro4-raw: 240, 247, 252;
+            --hro5-raw: 218, 226, 232;
+            --hro6-raw: 170, 181, 191;
+            --hro7-raw: 242, 79, 19;
+            --hro8-raw: 242, 190, 34;
+            --hro9-raw: 242, 79, 19;
+            --hro10-raw: 242, 79, 19;
+            --hro11-raw: 230, 197, 103;
+            --hro12-raw: 68, 126, 179;
+            --hro13-raw: 161, 205, 68;
+            --hro14-raw: 217, 56, 48;
+            --hro15-raw: 245, 133, 127;
 
             /* Duplicated for better ergonomics in devtools */
             /* Dark colors. */
-            --hero0: rgb(74, 75, 81);
-            --hero1: rgb(86, 87, 94);
-            --hero2: rgb(51, 52, 56);
-            --hero3: rgb(32, 34, 36);
+            --hro0: rgb(74, 75, 81);
+            --hro1: rgb(86, 87, 94);
+            --hro2: rgb(51, 52, 56);
+            --hro3: rgb(32, 34, 36);
 
             /* Light colors. */
-            --hero4: rgb(240, 247, 252);
-            --hero5: rgb(218, 226, 232);
-            --hero6: rgb(170, 181, 191);
+            --hro4: rgb(240, 247, 252);
+            --hro5: rgb(218, 226, 232);
+            --hro6: rgb(170, 181, 191);
 
             /* Primary colors. */
-            --hero7: rgb(242, 79, 19);
-            --hero8: rgb(242, 190, 34);
-            --hero9: rgb(242, 79, 19);
-            --hero10: rgb(242, 79, 19);
+            --hro7: rgb(242, 79, 19);
+            --hro8: rgb(242, 190, 34);
+            --hro9: rgb(242, 79, 19);
+            --hro10: rgb(242, 79, 19);
             
             /* Action colors. */
-            --hero11: rgb(230, 197, 103);
-            --hero12: rgb(68, 126, 179);
-            --hero13: rgb(161, 205, 68);
-            --hero14: rgb(217, 56, 48);
-            --hero15: rgb(245, 133, 127);
+            --hro11: rgb(230, 197, 103);
+            --hro12: rgb(68, 126, 179);
+            --hro13: rgb(161, 205, 68);
+            --hro14: rgb(217, 56, 48);
+            --hro15: rgb(245, 133, 127);
             
-            background-color: var(--heroLightShade);
-            color: var(--heroText);
+            background-color: var(--hroLightShade);
+            color: var(--hroText);
 
             font-family: roboto;
 
@@ -135,7 +135,7 @@ export const indexHtml = (
         </style>
       </head>
       <body>
-        <hero-app></hero-app>
+        <hro-app></hro-app>
         ${scripts}
       </body>
     </html>`;

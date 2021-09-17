@@ -10,7 +10,7 @@ export const flexHostStyles = css`
 `;
 
 export const globalStyles = css`
-  .hero-flex {
+  .hro-flex {
     display: flex;
     flex-direction: column;
     flex: 1;
