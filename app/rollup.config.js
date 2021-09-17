@@ -37,22 +37,25 @@ const config = {
     }),
   ],
 };
-
-const isDevelopment = process.env.NODE_ENV === 'development';
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 if (isDevelopment) {
   config.watch = {};
-}
-
-if (!isDevelopment) {
   config.output.sourcemap = true;
   config.plugins = [
     ...config.plugins,
-    terser({}),
     dev({ dirs: ['dist'], host: 'localhost', spa: './index.html',  }),
     livereload({
       watch: ['dist'],
     }),
+  ];
+}
+
+if (!isDevelopment) {
+  config.output.sourcemap = false;
+  config.plugins = [
+    ...config.plugins,
+    terser({}),
   ];
 }
 

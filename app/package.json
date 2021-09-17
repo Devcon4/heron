@@ -6,9 +6,9 @@
   "scripts": {
     "test": "jest",
     "prebuild": "rimraf dist/*",
-    "build": "rollup -c",
+    "build": "cross-env NODE_ENV=production rollup -c",
     "prestart": "rimraf dist/*",
-    "start": "rollup -c -w --debug"
+    "start": "cross-env NODE_ENV=development rollup -c -w --debug"
   },
   "repository": {
     "type": "git",
