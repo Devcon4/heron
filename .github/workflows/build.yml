@@ -88,7 +88,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./app/dockerfile
+          file: ./api/dockerfile
           pull: true
           push: true
           cache-from: type=local,src=/tmp/.main-cache
