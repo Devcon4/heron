@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com/" />
+    <link rel="icon" href="./assets/favicon.png" />
+
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="description" content="A template Lit app!" />
+    <link rel="shortcut icon" />
+    <base href="/" />
+    <title>Heron App!</title>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons&display=block"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        font-family: 'Roboto', sans-serif;
+      }
+
+      html,
+      body {
+        --on: inherit;
+        --off: ;
+
+        --light: var(--on);
+        --dark: var(--off);
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        margin: 0;
+        min-height: 100%;
+      }
+
+      body {
+        /* Var trick to switch between colors depending on theme without js. */
+        --hero-primary: var(--light, var(--hero11)) var(--dark, var(--hero7));
+        --hero-primary-variant: var(--light, var(--hero12))
+          var(--dark, var(--hero8));
+        --hero-secondary: var(--light, var(--hero13)) var(--dark, var(--hero9));
+        --hero-secondary-variant: var(--light, var(--hero14))
+          var(--dark, var(--hero10));
+        --hero-background: var(--light, var(--hero4)) var(--dark, var(--hero3));
+        --hero-surface: var(--light, var(--hero5)) var(--dark, var(--hero2));
+        --hero-error: var(--light, var(--hero15)) var(--dark, var(--hero15));
+        --hero-on-primary: var(--light, var(--hero3)) var(--dark, var(--hero4));
+        --hero-on-secondary: var(--light, var(--hero3))
+          var(--dark, var(--hero3));
+        --hero-on-background: var(--light, var(--hero3))
+          var(--dark, var(--hero4));
+        --hero-on-surface: var(--light, var(--hero3)) var(--dark, var(--hero4));
+        --hero-on-error: var(--light, var(--hero4)) var(--dark, var(--hero4));
+        --mdc-theme-primary: var(--hero-primary);
+        --mdc-theme-secondary: var(--hero-secondary);
+        --mdc-theme-surface: var(--hero-surface);
+        --mdc-theme-background: var(--hero-background);
+        --mdc-text-field-fill-color: var(--light, var(--hero4))
+          var(--dark, var(--hero3));
+        --mdc-text-field-label-ink-color: var(--hero-on-surface);
+        --mdc-text-field-ink-color: var(--hero-on-surface);
+        --mdc-circular-progress-bar-color-1: var(--hero-primary);
+        --mdc-circular-progress-bar-color-2: var(--hero-secondary);
+        --mdc-circular-progress-bar-color-3: var(--hero-primary-variant);
+        --mdc-circular-progress-bar-color-4: var(--hero-secondary-variant);
+
+        --hero0: rgb(74, 75, 81);
+        --hero1: rgb(86, 87, 94);
+        --hero2: rgb(51, 52, 56);
+        --hero3: rgb(32, 34, 36);
+        --hero4: rgb(229, 244, 255);
+        --hero5: rgb(215, 227, 237);
+        --hero6: rgb(189, 207, 223);
+        --hero7: rgb(140, 17, 248);
+        --hero8: rgb(225, 10, 98);
+        --hero9: rgb(17, 235, 248);
+        --hero10: rgb(255, 255, 255);
+        --hero11: rgb(234, 235, 27);
+        --hero12: rgb(235, 217, 27);
+        --hero13: rgb(68, 168, 205);
+        --hero14: rgb(125, 210, 249);
+        --hero15: rgb(169, 49, 43);
+
+        background-color: var(--hero-background);
+        color: var(--hero-on-surface);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          --light: var(--off);
+          --dark: var(--on);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <hero-app></hero-app>
+    <script type="module" async src="./app.ts"></script>
+  </body>
+</html>

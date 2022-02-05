@@ -1,35 +1,38 @@
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
-import html from '@rollup/plugin-html';
-import resolve from '@rollup/plugin-node-resolve';
+// import html from '@rollup/plugin-html';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import html from '@web/rollup-plugin-html';
 import copy from 'rollup-plugin-copy';
 import dev from 'rollup-plugin-dev';
 import livereload from 'rollup-plugin-livereload';
-import minifyHTML from 'rollup-plugin-minify-html-literals';
 import { terser } from 'rollup-plugin-terser';
-import { indexHtml } from './src/indexHtml.js';
 
-const extensions = ['.js', '.ts'];
+const extensions = ['.ts', '.mjs', '.js', '.json', '.node'];
 
 /** @type {import('rollup-plugin-copy').CopyOptions} */
-const copyConfig = {};
+const copyConfig = {
+  targets: [{ src: 'src/assets/**/*', dest: 'dist/assets' }],
+};
 
 /** @type {import('rollup').RollupOptions} */
 const config = {
-  input: 'src/app.ts',
+  input: ['./src/app.ts'],
   output: {
     dir: 'dist',
     format: 'es',
-    name: 'Heron',
+    name: 'Caracara',
     entryFileNames: '[name].[hash].js',
     chunkFileNames: '[name].[hash].js',
   },
   plugins: [
-    html({ template: (opts) => indexHtml(opts, ['app.']) }),
-    minifyHTML(),
-    copy(copyConfig),
-    resolve({ extensions }),
+    nodeResolve({ extensions }),
     commonjs(),
+    html({
+      input: './src/index.html',
+      minify: true,
+    }),
+    copy(copyConfig),
     babel({
       extensions,
       babelHelpers: 'bundled',
@@ -44,12 +47,7 @@ if (isDevelopment) {
   config.output.sourcemap = true;
   config.plugins = [
     ...config.plugins,
-    dev({
-      dirs: ['dist'],
-      host: 'localhost',
-      port: 4240,
-      spa: './index.html',
-      proxy: [{from: '/api', to: 'https://localhost:4241/api'}]  }),
+    dev({ dirs: ['dist'], spa: './index.html', host: 'localhost', port: 4240, proxy: [{from: '/api', to: 'https://localhost:4241/api'}] }),
     livereload({
       watch: ['dist'],
     }),
@@ -58,10 +56,7 @@ if (isDevelopment) {
 
 if (!isDevelopment) {
   config.output.sourcemap = false;
-  config.plugins = [
-    ...config.plugins,
-    terser({}),
-  ];
+  config.plugins = [...config.plugins, terser({})];
 }
 
 export default config;
