@@ -1,8 +1,11 @@
 import { css, customElement, html, LitElement } from 'lit-element';
+import { switchMap, tap } from 'rxjs';
+import { fromFetch } from 'rxjs/fetch';
 import { flexHostStyles, globalStyles } from '../globalStyles';
-
 @customElement('hro-hero-list')
 export class HeroListElement extends LitElement {
+
+  data = fromFetch('./api/weatherforecast').pipe(switchMap(r => r.json()), tap(d => console.log(d))).subscribe()
 
   render() {
     return html`<div class="hero-list hro-flex">

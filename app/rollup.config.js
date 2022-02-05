@@ -44,7 +44,12 @@ if (isDevelopment) {
   config.output.sourcemap = true;
   config.plugins = [
     ...config.plugins,
-    dev({ dirs: ['dist'], host: 'localhost', spa: './index.html',  }),
+    dev({
+      dirs: ['dist'],
+      host: 'localhost',
+      port: 4240,
+      spa: './index.html',
+      proxy: [{from: '/api', to: 'https://localhost:4241/api'}]  }),
     livereload({
       watch: ['dist'],
     }),
