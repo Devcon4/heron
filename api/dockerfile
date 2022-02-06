@@ -24,4 +24,4 @@ USER heronuser:herongroup
 EXPOSE 8080
 EXPOSE 4443
 
-ENTRYPOINT [ "dotnet", "./api/api.dll" ]
+ENTRYPOINT [ "./api/api.exe" ]
