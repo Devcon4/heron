@@ -4,7 +4,7 @@ metadata:
   name: herostats-dev-cert
 spec:
   dnsNames:
-    - herostats.gg
+    - herostats.dev
   secretName: herostats-dev-cert
   issuerRef:
     name: digitalocean-issuer
