@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - "main"
+env:
+  USERNAME: Devcon4
+  NAMESPACE: heron
 jobs:
   get_semver:
     name: Create semver
@@ -122,3 +125,33 @@ jobs:
               ref: "refs/tags/${{ needs.get_semver.outputs.semVer }}",
               sha: context.sha
             })
+  deploy:
+    needs:
+      - create_tag
+      - get_semver
+    name: Deploy to dev
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up kubectl
+        uses: matootie/dokube@v1.3.2
+        with:
+          personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN }}
+          clusterName: axiom
+      - uses: imranismail/setup-kustomize@v1
+      - continue-on-error: true
+        run: kubectl create namespace ${{ env.NAMESPACE }}
+      - run: kubectl config set-context --current --namespace ${{ env.NAMESPACE }}
+      - continue-on-error: true
+        run: kubectl create secret docker-registry ghcr-pull-secret --namespace ${{ env.NAMESPACE }} --docker-server="ghcr.io" --docker-username="${{ env.USERNAME }}" --docker-password="${{ secrets.GHCR_PAT }}"
+      - run: |
+          cd ./k8s/
+          kustomize edit set image ghcr.io/devcon4/heron-api:${{ needs.get_semver.outputs.semVer }}
+          kustomize edit set image ghcr.io/devcon4/heron-app:${{ needs.get_semver.outputs.semVer }}
+      - run: kubectl apply -k ./k8s/
+      - run: |
+          kubectl rollout restart deployment heron-api &&
+          kubectl rollout restart deployment heron-app
+      - run: |
+          kubectl rollout status deployment heron-api --timeout=4m &&
+          kubectl rollout status deployment heron-app --timeout=4m

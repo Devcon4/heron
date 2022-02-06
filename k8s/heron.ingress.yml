@@ -1,0 +1,24 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: bonelli-ingress
+spec:
+  entryPoints:
+    - websecure
+  tls:
+    secretName: herostats-dev-cert
+  routes:
+    - match: Host(`herostats.dev`) && PathPrefix(`/api`)
+      kind: Rule
+      services:
+        - kind: Service
+          name: heron-api
+          namespace: heron
+          port: 4241
+    - match: Host(`herostats.dev`)
+      kind: Rule
+      services:
+        - kind: Service
+          name: heron-app
+          namespace: heron
+          port: 4240
