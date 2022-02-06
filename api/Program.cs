@@ -17,8 +17,6 @@ builder.Services.Configure<RouteOptions>(options => {
   options.LowercaseQueryStrings = true;
 });
 
-Console.WriteLine("Connection string: " + builder.Configuration.GetConnectionString("DefaultConnection"));
-
 builder.Services.AddHealthChecks();
 
 // Add services to the container.
