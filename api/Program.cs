@@ -12,10 +12,14 @@ builder.Services.AddDbContext<HeronDBContext>(options =>
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
   .AddEntityFrameworkStores<HeronDBContext>();
 
+builder.Services.Configure<HeronDBContext>(c => c.Database.Migrate());
+
 builder.Services.Configure<RouteOptions>(options => {
   options.LowercaseUrls = true;
   options.LowercaseQueryStrings = true;
 });
+
+builder.Services.AddHealthChecks();
 
 // Add services to the container.
 builder.Services.AddMediatR(typeof(Program));
@@ -31,7 +35,9 @@ if (app.Environment.IsDevelopment()) {
   app.UseSwagger();
   app.UseSwaggerUI();
 }
-app.UseHttpsRedirection();
+
+app.MapHealthChecks("/healthz");
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

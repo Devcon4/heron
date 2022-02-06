@@ -39,13 +39,13 @@ spec:
                 - all
           livenessProbe:
             httpGet:
-              path: /
+              path: /healthz
               port: 8080
             initialDelaySeconds: 5
             periodSeconds: 5
           readinessProbe:
             httpGet:
-              path: /
+              path: /healthz
               port: 8080
           imagePullPolicy: Always
           ports:
