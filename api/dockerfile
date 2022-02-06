@@ -11,6 +11,15 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 ENV ASPNETCORE_URLS="http://*:8080,https://*:4443"
 COPY --from=build /api/out .
 
+RUN addgroup --group herongroup --gid 2000 \
+  && adduser \    
+  --uid 1000 \
+  --gid 2000 \
+  "heronuser"
+
+RUN chown heronuser:herongroup  .
+USER heronuser:herongroup 
+
 EXPOSE 8080
 EXPOSE 4443
 
