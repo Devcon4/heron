@@ -131,6 +131,11 @@ jobs:
       - get_semver
     name: Deploy to dev
     runs-on: ubuntu-latest
+    env:
+      CONNECTIONSTRINGS__DEFAULTCONNECTION: Server=postgres-postgresql-hl.infra;Port=5432;Database=heron;User Id=axiomdev;Password=${{ secrets.POSTGRES_PASSWORD }}
+    environment:
+      name: Development
+      url: https://herostats.dev
     steps:
       - uses: actions/checkout@v2
       - name: Set up kubectl
