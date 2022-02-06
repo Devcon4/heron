@@ -12,8 +12,6 @@ builder.Services.AddDbContext<HeronDBContext>(options =>
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
   .AddEntityFrameworkStores<HeronDBContext>();
 
-builder.Services.Configure<HeronDBContext>(c => c.Database.Migrate());
-
 builder.Services.Configure<RouteOptions>(options => {
   options.LowercaseUrls = true;
   options.LowercaseQueryStrings = true;
@@ -29,6 +27,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using(var scope = app.Services.CreateScope()) {
+  var services = scope.ServiceProvider;
+
+  var context = services.GetRequiredService<HeronDBContext>();
+  context.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) {
