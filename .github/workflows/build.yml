@@ -132,7 +132,7 @@ jobs:
     name: Deploy to dev
     runs-on: ubuntu-latest
     env:
-      CONNECTIONSTRINGS__DEFAULTCONNECTION: "Server=postgres-postgresql-hl.infraPort=5432Database=heronUser Id=axiomuserPassword=${{ secrets.POSTGRES_PASSWORD }}"
+      CONNECTIONSTRINGS__DEFAULTCONNECTION: "Server=postgres-postgresql-hl.infra; Port=5432Database=heron; User Id=axiomuser; Password=${{ secrets.POSTGRES_PASSWORD }};"
     environment:
       name: Development
       url: https://herostats.dev
@@ -150,7 +150,7 @@ jobs:
       - continue-on-error: true
         run: kubectl delete secret generic heron-appsettings-secret
       - continue-on-error: true
-        run: kubectl create secret generic heron-appsettings-secret --from-literal CONNECTIONSTRINGS__DEFAULTCONNECTION=${{ env.CONNECTIONSTRINGS__DEFAULTCONNECTION }}
+        run: kubectl create secret generic heron-appsettings-secret --from-literal CONNECTIONSTRINGS__DEFAULTCONNECTION="${{ env.CONNECTIONSTRINGS__DEFAULTCONNECTION }}"
       - continue-on-error: true
         run: kubectl create secret docker-registry ghcr-pull-secret --namespace ${{ env.NAMESPACE }} --docker-server="ghcr.io" --docker-username="${{ env.USERNAME }}" --docker-password="${{ secrets.GHCR_PAT }}"
       - run: |
