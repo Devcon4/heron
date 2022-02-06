@@ -8,8 +8,9 @@ COPY ./api .
 RUN dotnet publish -c Release -o out
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
+
 ENV ASPNETCORE_URLS="http://*:8080,https://*:4443"
-COPY --from=build /api/out .
+COPY --from=build /api/out ./api
 
 RUN addgroup --group herongroup --gid 2000 \
   && adduser \    
@@ -17,10 +18,10 @@ RUN addgroup --group herongroup --gid 2000 \
   --gid 2000 \
   "heronuser"
 
-RUN chown heronuser:herongroup  .
+RUN chown heronuser:herongroup  ./api
 USER heronuser:herongroup 
 
 EXPOSE 8080
 EXPOSE 4443
 
-ENTRYPOINT [ "dotnet", "api.dll" ]
+ENTRYPOINT [ "dotnet", "./api/api.dll" ]
