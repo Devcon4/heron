@@ -148,6 +148,8 @@ jobs:
         run: kubectl create namespace ${{ env.NAMESPACE }}
       - run: kubectl config set-context --current --namespace ${{ env.NAMESPACE }}
       - continue-on-error: true
+        run: kubectl create secret generic heron-appsettings-secret --from-literal CONNECTIONSTRINGS__DEFAULTCONNECTION=${{ env.CONNECTIONSTRINGS__DEFAULTCONNECTION }}
+      - continue-on-error: true
         run: kubectl create secret docker-registry ghcr-pull-secret --namespace ${{ env.NAMESPACE }} --docker-server="ghcr.io" --docker-username="${{ env.USERNAME }}" --docker-password="${{ secrets.GHCR_PAT }}"
       - run: |
           cd ./k8s/

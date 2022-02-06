@@ -29,6 +29,12 @@ spec:
       containers:
         - name: heron
           image: ghcr.io/devcon4/heron-api:latest
+          env:
+            - name: CONNECTIONSTRINGS__DEFAULTCONNECTION
+              valueFrom:
+                secretKeyRef:
+                  name: heron-appsettings-secret
+                  key: CONNECTIONSTRINGS__DEFAULTCONNECTION
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
