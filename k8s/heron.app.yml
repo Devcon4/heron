@@ -26,16 +26,9 @@ spec:
       labels:
         app: heron-app
     spec:
-      volumes:
-        - name: cert
-          secret:
-            secretName: herostats-dev-cert
       containers:
         - name: heron
           image: ghcr.io/devcon4/heron-app:latest
-          volumeMounts:
-            - mountPath: /etc/ssl/certs
-              name: cert
           securityContext:
             runAsNonRoot: true
             # readOnlyRootFilesystem: true
