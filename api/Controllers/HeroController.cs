@@ -5,10 +5,10 @@ namespace HeronApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class HeroesController : ControllerBase {
+public class HeroController : ControllerBase {
   private readonly IMediator _mediator;
 
-  public HeroesController(IMediator mediator) { _mediator = mediator; }
+  public HeroController(IMediator mediator) { _mediator = mediator; }
 
   [HttpGet()]
   public async Task<GetHeroesResponse> GetHeroes() {

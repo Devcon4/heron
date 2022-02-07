@@ -49,7 +49,7 @@ export class HeroState {
   }
 
   getHeroes() {
-    fromFetch('./api/heroes')
+    fromFetch('./api/hero')
       .pipe(
         HandleRequest<GetHeroesResponse>(),
         tap((r) => this.heroes.next(r.list)),
@@ -59,7 +59,7 @@ export class HeroState {
   }
 
   getHeroDetails(hashid: string) {
-    fromFetch(`./api/heroes/${hashid}`)
+    fromFetch(`./api/hero/${hashid}`)
       .pipe(
         HandleRequest<GetHeroResponse>(),
         tap((r) => this.heroDetails.next(r.hero)),

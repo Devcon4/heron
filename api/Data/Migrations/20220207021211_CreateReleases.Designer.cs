@@ -3,17 +3,19 @@ using System;
 using HeronApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace HeronApi.data.Migrations
+namespace api.Data.Migrations
 {
     [DbContext(typeof(HeronDBContext))]
-    partial class HeronDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220207021211_CreateReleases")]
+    partial class CreateReleases
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -252,61 +254,6 @@ namespace HeronApi.data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("HeroUpdateEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("ChangeNotes")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("DeveloperComments")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("HeroAbilityId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("ReleaseId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HeroAbilityId");
-
-                    b.HasIndex("ReleaseId");
-
-                    b.ToTable("HeroUpdates");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("c4fe85c7-d7ea-4c4e-b25b-182504a96b0f"),
-                            ChangeNotes = "Change from 45 to 50 healing",
-                            DeveloperComments = "A generic developer comment 1",
-                            HeroAbilityId = new Guid("33977acb-67f7-47d2-967e-355a18195efc"),
-                            ReleaseId = new Guid("2261cae5-98f8-48d9-bcc8-b798b2e269c2")
-                        },
-                        new
-                        {
-                            Id = new Guid("4cd59c55-4d11-44fa-9108-6a63564baaee"),
-                            ChangeNotes = "Change from 40 to 45 healing",
-                            DeveloperComments = "A generic developer comment 2",
-                            HeroAbilityId = new Guid("33977acb-67f7-47d2-967e-355a18195efc"),
-                            ReleaseId = new Guid("2261cae5-98f8-48d9-bcc8-b798b2e269c2")
-                        },
-                        new
-                        {
-                            Id = new Guid("7d473fdd-3b07-4f4a-997d-5963f91e1ced"),
-                            ChangeNotes = "Increase charge time from 4s to 5s",
-                            DeveloperComments = "A generic developer comment 3",
-                            HeroAbilityId = new Guid("e80bf53b-65a9-4189-9a21-393fcdacd494"),
-                            ReleaseId = new Guid("2261cae5-98f8-48d9-bcc8-b798b2e269c2")
-                        });
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -524,7 +471,7 @@ namespace HeronApi.data.Migrations
                         new
                         {
                             Id = new Guid("2261cae5-98f8-48d9-bcc8-b798b2e269c2"),
-                            ReleaseDate = new DateTime(2022, 1, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ReleaseDate = new DateTime(2022, 1, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "OVERWATCH RETAIL PATCH NOTES - JANUARY 25, 2022"
                         });
                 });
@@ -538,25 +485,6 @@ namespace HeronApi.data.Migrations
                         .IsRequired();
 
                     b.Navigation("Hero");
-                });
-
-            modelBuilder.Entity("HeroUpdateEntity", b =>
-                {
-                    b.HasOne("HeronApi.Data.Entities.HeroAbilityEntity", "HeroAbility")
-                        .WithMany()
-                        .HasForeignKey("HeroAbilityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ReleaseEntity", "Release")
-                        .WithMany()
-                        .HasForeignKey("ReleaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("HeroAbility");
-
-                    b.Navigation("Release");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -14,4 +14,6 @@ public class HeronDBContext : IdentityDbContext {
   }
   public DbSet<HeroEntity> Heroes { get; set; } = default !;
   public DbSet<HeroAbilityEntity> HeroAblities { get; set; } = default !;
+  public DbSet<HeroUpdateEntity> HeroUpdates { get; set; } = default !;
+  public DbSet<ReleaseEntity> Releases { get; set; } = default !;
 }

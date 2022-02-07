@@ -1,5 +1,6 @@
 import { IRoute } from 'router-slot';
 import heroState from './heroState';
+import releaseState from './releaseState';
 
 export const routes: Array<IRoute> = [
   {
@@ -9,7 +10,10 @@ export const routes: Array<IRoute> = [
   {
     path: 'gallery',
     component: async () => await import('../components/gallery'),
-    setup: () => heroState.getHeroes(),
+    setup: () => {
+      heroState.getHeroes();
+      releaseState.getReleases();
+    },
   },
   {
     path: 'herodetails/:id',
@@ -17,6 +21,7 @@ export const routes: Array<IRoute> = [
     setup: (_, info) => {
       heroState.clearHeroDetails();
       heroState.getHeroDetails(info.match.params.id);
+      releaseState.getReleases();
     },
   },
   {
