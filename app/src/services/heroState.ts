@@ -7,6 +7,14 @@ export type Hero = {
   name: string;
 };
 
+export type HeroAbility = {
+  id: string;
+  heroid: string;
+  name: string;
+  description: string;
+  isultimate: boolean;
+};
+
 export type GetHeroesResponse = {
   list: Hero[];
   count: number;
@@ -14,12 +22,15 @@ export type GetHeroesResponse = {
 
 export type GetHeroResponse = {
   hero: Hero;
+  abilities: HeroAbility[];
 };
+
 export type Lookup = { [key: string]: string };
 export type HashTable = { lookup: Lookup; inverse: Lookup };
 export class HeroState {
   heroes = new BehaviorSubject<Hero[]>([]);
   heroDetails = new BehaviorSubject<Hero>(undefined);
+  heroAbilities = new BehaviorSubject<HeroAbility[]>([]);
   heroHashLookup = new BehaviorSubject<HashTable>({ inverse: {}, lookup: {} });
 
   private mapHeroHashes(list: Hero[]): HashTable {
@@ -27,7 +38,7 @@ export class HeroState {
 
     for (let hero of list) {
       let [first, second] = hero.id.split('-');
-      if (lookup[first]) first += second;
+      if (lookup[first]) first += `-${second}`;
       lookup[first] = hero.id;
     }
 
@@ -48,11 +59,11 @@ export class HeroState {
   }
 
   getHeroDetails(hashid: string) {
-    const id = this.heroHashLookup.getValue().lookup[hashid];
-    fromFetch(`./api/heroes/${id}`)
+    fromFetch(`./api/heroes/${hashid}`)
       .pipe(
         HandleRequest<GetHeroResponse>(),
-        tap((r) => this.heroDetails.next(r.hero))
+        tap((r) => this.heroDetails.next(r.hero)),
+        tap((r) => this.heroAbilities.next(r.abilities))
       )
       .subscribe();
   }

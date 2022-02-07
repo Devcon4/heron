@@ -15,8 +15,8 @@ public class HeroesController : ControllerBase {
     return await _mediator.Send(new GetHeroesRequest());
   }
 
-  [HttpGet("{id:guid}")]
-  public async Task<GetHeroResponse> GetHero(Guid id) {
-    return await _mediator.Send(new GetHeroRequest(id));
+  [HttpGet("{hashid}")]
+  public async Task<GetHeroResponse> GetHero(string hashid) {
+    return await _mediator.Send(new GetHeroRequest(hashid));
   }
 }

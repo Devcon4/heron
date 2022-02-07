@@ -1,7 +1,7 @@
 import { css, html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { async } from '../services/decoratorUtils';
-import heroState, { Hero } from '../services/heroState';
+import heroState, { Hero, HeroAbility } from '../services/heroState';
 import {
   flexHostStyles,
   globalStyles,
@@ -16,8 +16,23 @@ export default class HeroDetailsElement extends LitElement {
   @async(heroState.heroDetails)
   heroDetails: Hero;
 
+  @state()
+  @async(heroState.heroAbilities)
+  heroAbilities: HeroAbility[];
+
   detailsBody() {
-    return html`<h2 class="el-small">${this.heroDetails.name}</h2>`;
+    return html`<h2 class="el-small">${this.heroDetails.name}</h2>
+      ${this.abilities()}`;
+  }
+
+  abilities() {
+    return this.heroAbilities.map(
+      (a) =>
+        html`<div class="ability">
+          <h3 class="title">${a.name}</h3>
+          <p>${a.description}</p>
+        </div>`
+    );
   }
 
   render() {

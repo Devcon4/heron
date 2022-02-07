@@ -12,5 +12,6 @@ public class HeronDBContext : IdentityDbContext {
     base.OnModelCreating(modelBuilder);
     modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
   }
-  public DbSet<HeroEntity> Heroes { get; set; } = default!;
+  public DbSet<HeroEntity> Heroes { get; set; } = default !;
+  public DbSet<HeroAbilityEntity> HeroAblities { get; set; } = default !;
 }
