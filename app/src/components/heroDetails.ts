@@ -27,7 +27,7 @@ const heroAbilities = combineLatest([
   heroState.heroDetails,
   heroState.heroAbilities,
 ]).pipe(
-  map(([hero, abilities]) => abilities.filter((a) => a.heroid !== hero.id))
+  map(([hero, abilities]) => abilities.filter((a) => a.heroid !== hero?.id))
 );
 
 const heroUpdateLookup = combineLatest([
@@ -70,7 +70,7 @@ export default class HeroDetailsElement extends LitElement {
   releaseSelect() {
     return html`<mwc-select
       @selected="${({ detail }) => this.updateRelease(detail.index)}"
-      value="${this.releases[0].id}"
+      value="${this.releaseDetails?.id || this.releases[0].id}"
       label="Release"
     >
       ${this.releases.map(

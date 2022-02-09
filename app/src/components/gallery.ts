@@ -1,7 +1,8 @@
 import { css, html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import { HashTable } from '../services/arrayUtils';
 import { async } from '../services/decoratorUtils';
-import heroState, { HashTable, Hero } from '../services/heroState';
+import heroState, { Hero } from '../services/heroState';
 import {
   flexHostStyles,
   globalStyles,

@@ -58,7 +58,6 @@ export const async =
 
           const initConnected = this['firstUpdated'];
           self['firstUpdated'] = function () {
-
             // Sub to stream until we destroy.
             stream
               .pipe(
