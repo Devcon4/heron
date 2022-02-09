@@ -57,14 +57,30 @@
           var(--dark, var(--hero4));
         --hero-on-surface: var(--light, var(--hero3)) var(--dark, var(--hero4));
         --hero-on-error: var(--light, var(--hero4)) var(--dark, var(--hero4));
+
+        /* global material theming */
         --mdc-theme-primary: var(--hero-primary);
         --mdc-theme-secondary: var(--hero-secondary);
         --mdc-theme-surface: var(--hero-surface);
         --mdc-theme-background: var(--hero-background);
+        --mdc-theme-on-surface: var(--hero-on-surface);
+        --mdc-theme-text-primary-on-background: var(--hero-on-background);
+
+        /* select */
+        --mdc-select-fill-color: var(--hero-background);
+        --mdc-select-ink-color: var(--hero-on-background);
+        --mdc-select-label-ink-color: var(--hero-on-background);
+        --mdc-select-dropdown-icon-color: var(--hero-on-background);
+
+        /* list */
+
+        /* textfield */
         --mdc-text-field-fill-color: var(--light, var(--hero4))
           var(--dark, var(--hero3));
         --mdc-text-field-label-ink-color: var(--hero-on-surface);
         --mdc-text-field-ink-color: var(--hero-on-surface);
+
+        /* circular */
         --mdc-circular-progress-bar-color-1: var(--hero-primary);
         --mdc-circular-progress-bar-color-2: var(--hero-secondary);
         --mdc-circular-progress-bar-color-3: var(--hero-primary-variant);
@@ -102,5 +118,6 @@
   <body>
     <hero-app></hero-app>
     <script type="module" async src="./app.ts"></script>
+    <script type="module" async src="./mwc.ts"></script>
   </body>
 </html>

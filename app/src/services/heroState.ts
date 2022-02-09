@@ -1,5 +1,6 @@
 import { BehaviorSubject, tap } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
+import { HashTable, Lookup } from './arrayUtils';
 import { HandleRequest } from './fetchUtils';
 
 export type Hero = {
@@ -25,8 +26,6 @@ export type GetHeroResponse = {
   abilities: HeroAbility[];
 };
 
-export type Lookup = { [key: string]: string };
-export type HashTable = { lookup: Lookup; inverse: Lookup };
 export class HeroState {
   heroes = new BehaviorSubject<Hero[]>([]);
   heroDetails = new BehaviorSubject<Hero>(undefined);

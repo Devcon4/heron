@@ -5,7 +5,7 @@ import { HandleRequest } from './fetchUtils';
 export type Release = {
   id: string;
   title: string;
-  releaseDate: Date;
+  releaseDate: string;
 };
 
 export type HeroUpdate = {
@@ -35,8 +35,7 @@ export class ReleaseState {
     fromFetch('./api/release')
       .pipe(
         HandleRequest<GetReleasesResponse>(),
-        tap((r) => this.releases.next(r.list)),
-        tap((r) => this.getRelease(r.list[0].id))
+        tap((r) => this.releases.next(r.list))
       )
       .subscribe();
   }

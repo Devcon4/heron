@@ -1,9 +1,10 @@
-import '@material/mwc-icon-button';
 import { css, html, LitElement } from 'lit';
 import { customElement, query, state } from 'lit/decorators.js';
 import { RouterSlot } from 'router-slot';
 import 'router-slot/router-slot';
 import { async } from './services/decoratorUtils';
+import heroState from './services/heroState';
+import releaseState from './services/releaseState';
 import { routes } from './services/routes';
 import themeState, { ThemeType } from './services/themeState';
 import { flexHostStyles, globalStyles } from './styles/globalStyles';
@@ -20,6 +21,8 @@ export default class AppElement extends LitElement {
   toggleThemeAction = () => themeState.toggleTheme();
 
   firstUpdated() {
+    releaseState.getReleases();
+    heroState.getHeroes();
     this.$routerSlot.add(routes);
   }
 

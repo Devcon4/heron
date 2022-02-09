@@ -1,8 +1,6 @@
-import '@material/mwc-circular-progress-four-color';
 import { css, html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { globalStyles } from '../styles/globalStyles';
-
 @customElement('hero-loading')
 export class LoadingElement extends LitElement {
   render() {

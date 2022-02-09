@@ -24,6 +24,17 @@ const config = {
     name: 'Caracara',
     entryFileNames: '[name].[hash].js',
     chunkFileNames: '[name].[hash].js',
+    // manualChunks: {
+    //   mwc: [
+    //     'node_modules/@material/mwc-base',
+    //     'node_modules/@material/mwc-button',
+    //     'node_modules/@material/mwc-circular-progress-four-color',
+    //     'node_modules/@material/mwc-icon',
+    //     'node_modules/@material/mwc-menu',
+    //     'node_modules/@material/mwc-select',
+    //     'node_modules/@material/mwc-textfield',
+    //   ],
+    // },
   },
   plugins: [
     nodeResolve({ extensions }),
@@ -47,7 +58,13 @@ if (isDevelopment) {
   config.output.sourcemap = true;
   config.plugins = [
     ...config.plugins,
-    dev({ dirs: ['dist'], spa: './index.html', host: 'localhost', port: 4240, proxy: [{from: '/api', to: 'https://localhost:4241/api'}] }),
+    dev({
+      dirs: ['dist'],
+      spa: './index.html',
+      host: 'localhost',
+      port: 4240,
+      proxy: [{ from: '/api', to: 'https://localhost:4241/api' }],
+    }),
     livereload({
       watch: ['dist'],
     }),
