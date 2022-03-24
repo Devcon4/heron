@@ -1,9 +1,16 @@
 import { BehaviorSubject, tap } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
-import { HashTable, Lookup } from './arrayUtils';
+import { HashTable, Lookup, order } from './arrayUtils';
 import { HandleRequest } from './fetchUtils';
 
 export type Hero = {
+  id: string;
+  name: string;
+  type: string;
+  description: string;
+};
+
+export type HeroListItem = {
   id: string;
   name: string;
 };
@@ -17,7 +24,7 @@ export type HeroAbility = {
 };
 
 export type GetHeroesResponse = {
-  list: Hero[];
+  list: HeroListItem[];
   count: number;
 };
 
@@ -27,12 +34,12 @@ export type GetHeroResponse = {
 };
 
 export class HeroState {
-  heroes = new BehaviorSubject<Hero[]>([]);
+  heroes = new BehaviorSubject<HeroListItem[]>([]);
   heroDetails = new BehaviorSubject<Hero>(undefined);
   heroAbilities = new BehaviorSubject<HeroAbility[]>([]);
   heroHashLookup = new BehaviorSubject<HashTable>({ inverse: {}, lookup: {} });
 
-  private mapHeroHashes(list: Hero[]): HashTable {
+  private mapHeroHashes(list: HeroListItem[]): HashTable {
     const lookup: Lookup = {};
 
     for (let hero of list) {
@@ -51,7 +58,7 @@ export class HeroState {
     fromFetch('./api/hero')
       .pipe(
         HandleRequest<GetHeroesResponse>(),
-        tap((r) => this.heroes.next(r.list)),
+        tap((r) => this.heroes.next(r.list.sort(order((h) => h.name, 'Asc')))),
         tap((r) => this.heroHashLookup.next(this.mapHeroHashes(r.list)))
       )
       .subscribe();

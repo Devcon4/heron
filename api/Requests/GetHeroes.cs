@@ -1,9 +1,9 @@
 using HeronApi.Data;
-using HeronApi.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-public record GetHeroesResponse(List<Hero> List, int count);
+public record HeroListItem(Guid Id, string Name);
+public record GetHeroesResponse(List<HeroListItem> List, int count);
 public record GetHeroesRequest : IRequest<GetHeroesResponse> { }
 
 public class getHeroesHandler : IRequestHandler<GetHeroesRequest, GetHeroesResponse> {
@@ -12,7 +12,7 @@ public class getHeroesHandler : IRequestHandler<GetHeroesRequest, GetHeroesRespo
   public getHeroesHandler(HeronDBContext db) { _db = db; }
   public async Task<GetHeroesResponse> Handle(GetHeroesRequest request, CancellationToken cancellationToken) {
     return new GetHeroesResponse(
-      await _db.Heroes.ToListAsync<Hero>(cancellationToken),
+      await _db.Heroes.Select(h => new HeroListItem(h.Id, h.Name)).ToListAsync(cancellationToken),
       await _db.Heroes.CountAsync(cancellationToken));
   }
 }

@@ -13,12 +13,6 @@
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"]
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "src/**/*.spec.*"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "src/**/*.spec.*"]
 }

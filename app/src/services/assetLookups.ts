@@ -1,0 +1,40 @@
+import { HeroIds } from './dataLookups';
+
+export const HeroPortraits = {
+  [HeroIds.Ana]: `./assets/images/HeroIcons/ana-select-portrait.png`,
+};
+
+export const HeroIcons = {
+  [HeroIds.Ana]: `./assets/images/HeroIcons/ana-portrait.png`,
+  [HeroIds.Ashe]: `./assets/images/HeroIcons/ashe-icon-portrait.png`,
+  [HeroIds.Baptiste]: `./assets/images/HeroIcons/baptiste-icon-portrait.png`,
+  [HeroIds.Bastion]: `./assets/images/HeroIcons/bastion-icon-portrait.png`,
+  [HeroIds.Brigitte]: `./assets/images/HeroIcons/brigitte-icon-portrait.png`,
+  [HeroIds.Cassidy]: `./assets/images/HeroIcons/cassidy-icon-portrait.png`,
+  [HeroIds.Dva]: `./assets/images/HeroIcons/dva-icon-portrait.png`,
+  [HeroIds.Doomfist]: `./assets/images/HeroIcons/doomfist-icon-portrait.png`,
+  [HeroIds.Echo]: `./assets/images/HeroIcons/echo-icon-portrait.png`,
+  [HeroIds.Genji]: `./assets/images/HeroIcons/genji-icon-portrait.png`,
+  [HeroIds.Hanzo]: `./assets/images/HeroIcons/hanzo-icon-portrait.png`,
+  [HeroIds.Junkrat]: `./assets/images/HeroIcons/junkrat-icon-portrait.png`,
+  [HeroIds.Lucio]: `./assets/images/HeroIcons/lucio-icon-portrait.png`,
+  [HeroIds.Mei]: `./assets/images/HeroIcons/mei-icon-portrait.png`,
+  [HeroIds.Mercy]: `./assets/images/HeroIcons/mercy-icon-portrait.png`,
+  [HeroIds.Moira]: `./assets/images/HeroIcons/moira-icon-portrait.png`,
+  [HeroIds.Orisa]: `./assets/images/HeroIcons/orisa-icon-portrait.png`,
+  [HeroIds.Pharah]: `./assets/images/HeroIcons/pharah-icon-portrait.png`,
+  [HeroIds.Reaper]: `./assets/images/HeroIcons/reaper-icon-portrait.png`,
+  [HeroIds.Reinhardt]: `./assets/images/HeroIcons/reinhardt-icon-portrait.png`,
+  [HeroIds.Roadhog]: `./assets/images/HeroIcons/roadhog-icon-portrait.png`,
+  [HeroIds.Sigma]: `./assets/images/HeroIcons/sigma-icon-portrait.png`,
+  [HeroIds.Soldier]: `./assets/images/HeroIcons/soldier-icon-portrait.png`,
+  [HeroIds.Sombra]: `./assets/images/HeroIcons/sombra-icon-portrait.png`,
+  [HeroIds.Symmetra]: `./assets/images/HeroIcons/symmetra-icon-portrait.png`,
+  [HeroIds.Torbjorn]: `./assets/images/HeroIcons/torbjorn-icon-portrait.png`,
+  [HeroIds.Tracer]: `./assets/images/HeroIcons/tracer-icon-portrait.png`,
+  [HeroIds.Widowmaker]: `./assets/images/HeroIcons/widowmaker-icon-portrait.png`,
+  [HeroIds.Winston]: `./assets/images/HeroIcons/winston-icon-portrait.png`,
+  [HeroIds.Hammond]: `./assets/images/HeroIcons/hammond-icon-portrait.png`,
+  [HeroIds.Zarya]: `./assets/images/HeroIcons/zarya-icon-portrait.png`,
+  [HeroIds.Zenyatta]: `./assets/images/HeroIcons/zenyatta-icon-portrait.png`,
+};

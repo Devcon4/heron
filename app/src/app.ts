@@ -1,19 +1,38 @@
 import { css, html, LitElement } from 'lit';
 import { customElement, query, state } from 'lit/decorators.js';
+import { DateTime } from 'luxon';
 import { RouterSlot } from 'router-slot';
 import 'router-slot/router-slot';
+import { map } from 'rxjs';
+import { order } from './services/arrayUtils';
 import { async } from './services/decoratorUtils';
 import heroState from './services/heroState';
-import releaseState from './services/releaseState';
+import releaseState, { Release } from './services/releaseState';
 import { routes } from './services/routes';
 import themeState, { ThemeType } from './services/themeState';
 import { flexHostStyles, globalStyles } from './styles/globalStyles';
+
+const releases = releaseState.releases.pipe(
+  map((l) =>
+    l
+      .map((r) => ({ ...r, releaseDate: DateTime.fromISO(r.releaseDate) }))
+      .sort(order((r) => r.releaseDate))
+  )
+);
 
 @customElement('hero-app')
 export default class AppElement extends LitElement {
   @state()
   @async(themeState.theme)
   colorTheme: ThemeType;
+
+  @state()
+  @async(releases)
+  releases: Release[];
+
+  @state()
+  @async(releaseState.releaseDetails)
+  releaseDetails: Release;
 
   @query('router-slot')
   $routerSlot!: RouterSlot;
@@ -25,16 +44,40 @@ export default class AppElement extends LitElement {
     heroState.getHeroes();
     this.$routerSlot.add(routes);
   }
+  updateRelease(index: number) {
+    const id = this.releases[index].id;
+    releaseState.getRelease(id);
+  }
+
+  releaseSelect() {
+    return html`<mwc-select
+      @selected="${({ detail }) => this.updateRelease(detail.index)}"
+      value="${this.releaseDetails?.id || this.releases[0].id}"
+      label="Release"
+    >
+      ${this.releases.map(
+        (r) =>
+          html`<mwc-list-item value="${r.id}"
+            >${DateTime.fromISO(r.releaseDate, {
+              zone: 'UTC',
+            }).toLocaleString(DateTime.DATE_MED)}</mwc-list-item
+          >`
+      )}
+    </mwc-select>`;
+  }
 
   render() {
     return html`<div class="app flex">
       <div class="header">
         <a href="/gallery"><h1>🐦 Heron</h1></a>
-        <mwc-icon-button
-          id="theme-btn"
-          @click=${this.toggleThemeAction}
-          .icon="${this.colorTheme === 'dark' ? 'light_mode' : 'nights_stay'}"
-        ></mwc-icon-button>
+        <div class="actons">
+          ${this.releases?.length ? this.releaseSelect() : undefined}
+          <mwc-icon-button
+            id="theme-btn"
+            @click=${this.toggleThemeAction}
+            .icon="${this.colorTheme === 'dark' ? 'light_mode' : 'nights_stay'}"
+          ></mwc-icon-button>
+        </div>
       </div>
       <!-- <div class="box-list">
         <div class="box box-1">primary</div>

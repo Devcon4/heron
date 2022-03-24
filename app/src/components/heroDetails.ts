@@ -1,12 +1,12 @@
 import { css, html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import { DateTime } from 'luxon';
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { groupBy, Lookup, order } from '../services/arrayUtils';
+import { groupBy, Lookup } from '../services/arrayUtils';
+import { HeroPortraits } from '../services/assetLookups';
 import { async } from '../services/decoratorUtils';
 import heroState, { Hero, HeroAbility } from '../services/heroState';
-import releaseState, { HeroUpdate, Release } from '../services/releaseState';
+import releaseState, { HeroUpdate } from '../services/releaseState';
 import {
   flexHostStyles,
   globalStyles,
@@ -14,14 +14,6 @@ import {
   ShadowStyles,
 } from '../styles/globalStyles';
 import { loading } from './loading';
-
-const releases = releaseState.releases.pipe(
-  map((l) =>
-    l
-      .map((r) => ({ ...r, releaseDate: DateTime.fromISO(r.releaseDate) }))
-      .sort(order((r) => r.releaseDate))
-  )
-);
 
 const heroAbilities = combineLatest([
   heroState.heroDetails,
@@ -39,6 +31,8 @@ const heroUpdateLookup = combineLatest([
   ),
   map((updates) => groupBy(updates, (u) => u.heroAbilityId))
 );
+import { Tab } from '@material/mwc-tab';
+export class NavTabElement extends Tab {}
 
 @customElement('hero-details')
 export default class HeroDetailsElement extends LitElement {
@@ -54,47 +48,28 @@ export default class HeroDetailsElement extends LitElement {
   @async(heroUpdateLookup)
   heroUpdateLookup: Lookup<HeroUpdate[]>;
 
-  @state()
-  @async(releases)
-  releases: Release[];
-
-  @state()
-  @async(releaseState.releaseDetails)
-  releaseDetails: Release;
-
-  updateRelease(index: number) {
-    const id = this.releases[index].id;
-    releaseState.getRelease(id);
-  }
-
-  releaseSelect() {
-    return html`<mwc-select
-      @selected="${({ detail }) => this.updateRelease(detail.index)}"
-      value="${this.releaseDetails?.id || this.releases[0].id}"
-      label="Release"
-    >
-      ${this.releases.map(
-        (r) =>
-          html`<mwc-list-item value="${r.id}"
-            >${DateTime.fromISO(r.releaseDate, {
-              zone: 'UTC',
-            }).toLocaleString(DateTime.DATE_MED)}</mwc-list-item
-          >`
-      )}
-    </mwc-select>`;
-  }
-
   detailsBody() {
-    return html` <div class="card">
-        <h2 class="el-small">
-          <div class="name">${this.heroDetails.name}</div>
-          <div class="release">
-            ${this.releases?.length ? this.releaseSelect() : undefined}
-          </div>
-        </h2>
+    return html` <div class="card el-small">
+        <img
+          class="portrait"
+          src="${HeroPortraits[this.heroDetails.id]}"
+          alt="${this.heroDetails.name}"
+        />
+        <div class="header">
+          <h2>${this.heroDetails.name}</h2>
+          <div class="type">${this.heroDetails.type}</div>
+        </div>
+        <p class="description">${this.heroDetails.description}</p>
       </div>
-      ${this.abilities()}
+      ${this.tabs()} ${this.abilities()}
       <div class="changelog"></div>`;
+  }
+
+  tabs() {
+    return html`<mwc-tab-bar activeIndex="1">
+      <mwc-tab label="Current"></mwc-tab>
+      <mwc-tab label="History"></mwc-tab>
+    </mwc-tab-bar>`;
   }
 
   abilities() {
@@ -134,7 +109,25 @@ export default class HeroDetailsElement extends LitElement {
           padding: 12px;
         }
 
-        h2 {
+        .portrait {
+          display: flex;
+        }
+
+        .portrait {
+          float: left;
+          border-radius: 10px;
+          filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.4));
+          background-color: var(--hero-background);
+          margin: 8px;
+          margin-right: 21px;
+        }
+
+        .type {
+          font-size: 1.4rem;
+          justify-self: flex-end;
+        }
+
+        .header {
           display: flex;
           justify-content: space-between;
         }

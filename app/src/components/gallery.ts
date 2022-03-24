@@ -1,6 +1,7 @@
 import { css, html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { HashTable } from '../services/arrayUtils';
+import { HeroIcons } from '../services/assetLookups';
 import { async } from '../services/decoratorUtils';
 import heroState, { Hero } from '../services/heroState';
 import {
@@ -22,12 +23,17 @@ export default class GalleryElement extends LitElement {
   heroHash: HashTable;
 
   heroList() {
-    return html`${this.heroes.map(
-      (h) =>
-        html`<div class="hero card">
-          <a href="/herodetails/${this.heroHash.inverse[h.id]}">${h.name}</a>
-        </div>`
-    )}`;
+    return html`<div class="hero-list">
+      ${this.heroes.map(
+        (h) =>
+          html`<div class="hero card el-small">
+            <a href="/herodetails/${this.heroHash.inverse[h.id]}">
+              <img class="portrait" src="${HeroIcons[h.id]}" alt="${h.name}" />
+              <div class="title">${h.name}</div>
+            </a>
+          </div>`
+      )}
+    </div>`;
   }
 
   render() {
@@ -47,6 +53,38 @@ export default class GalleryElement extends LitElement {
         h2 {
           background-color: var(--hero-surface);
           padding: 12px;
+        }
+
+        .hero-list {
+          display: flex;
+          flex-wrap: wrap;
+        }
+
+        .card {
+          background-color: var(--hero-surface);
+          margin: 12px;
+          border-radius: 5px;
+          outline: 1px solid transparent;
+          filter: brightness(100%);
+          transition: all linear 250ms;
+          overflow: hidden;
+        }
+
+        .card:hover {
+          outline: 1px solid var(--hero-primary);
+          filter: brightness(85%);
+        }
+
+        a .title {
+          width: 100%;
+          text-align: center;
+          border-top: 2px solid var(--hero-primary);
+        }
+
+        .card a {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
       `,
     ];

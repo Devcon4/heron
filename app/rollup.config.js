@@ -12,7 +12,12 @@ const extensions = ['.ts', '.mjs', '.js', '.json', '.node'];
 
 /** @type {import('rollup-plugin-copy').CopyOptions} */
 const copyConfig = {
-  targets: [{ src: 'src/assets/**/*', dest: 'dist/assets' }],
+  targets: [
+    {
+      src: 'src/assets/**/*',
+      dest: 'dist/assets',
+    },
+  ],
 };
 
 /** @type {import('rollup').RollupOptions} */
@@ -44,6 +49,12 @@ const config = {
       minify: true,
     }),
     copy(copyConfig),
+    // image({
+    //   output: `./dist/assets/images`, // default the root
+    //   extensions: /\.(png|jpg|jpeg|gif|svg)$/, // support png|jpg|jpeg|gif|svg, and it's alse the default value
+    //   exclude: 'node_modules/**',
+    //   _slash: true,
+    // }),
     babel({
       extensions,
       babelHelpers: 'bundled',
@@ -51,6 +62,7 @@ const config = {
     }),
   ],
 };
+
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 if (isDevelopment) {
