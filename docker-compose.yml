@@ -11,6 +11,14 @@ services:
       - 5432:5432
     networks:
       - heron_default
+  seq:
+    image: datalust/seq:latest
+    ports:
+    - '5341:80'
+    environment:
+    - ACCEPT_EULA=Y
+    networks:
+    - heron_default
 networks:
   heron_default:
 

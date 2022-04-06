@@ -1,6 +1,7 @@
 import { BehaviorSubject, tap } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
-import { HandleRequest } from './fetchUtils';
+
+import { handleRequest } from './fetchUtils';
 
 export type Release = {
   id: string;
@@ -34,7 +35,7 @@ export class ReleaseState {
   getReleases() {
     fromFetch('./api/release')
       .pipe(
-        HandleRequest<GetReleasesResponse>(),
+        handleRequest<GetReleasesResponse>(),
         tap((r) => this.releases.next(r.list))
       )
       .subscribe();
@@ -43,7 +44,7 @@ export class ReleaseState {
   getRelease(id: string) {
     fromFetch(`./api/release/${id}`)
       .pipe(
-        HandleRequest<GetReleaseResponse>(),
+        handleRequest<GetReleaseResponse>(),
         tap((r) => this.releaseDetails.next(r.release)),
         tap((r) => this.heroUpdates.next(r.heroUpdates))
       )

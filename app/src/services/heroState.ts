@@ -1,7 +1,8 @@
 import { BehaviorSubject, tap } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
+
 import { HashTable, Lookup, order } from './arrayUtils';
-import { HandleRequest } from './fetchUtils';
+import { handleRequest } from './fetchUtils';
 
 export type Hero = {
   id: string;
@@ -42,8 +43,9 @@ export class HeroState {
   private mapHeroHashes(list: HeroListItem[]): HashTable {
     const lookup: Lookup = {};
 
-    for (let hero of list) {
-      let [first, second] = hero.id.split('-');
+    for (const hero of list) {
+      let [first,
+second] = hero.id.split('-');
       if (lookup[first]) first += `-${second}`;
       lookup[first] = hero.id;
     }
@@ -57,7 +59,7 @@ export class HeroState {
   getHeroes() {
     fromFetch('./api/hero')
       .pipe(
-        HandleRequest<GetHeroesResponse>(),
+        handleRequest<GetHeroesResponse>(),
         tap((r) => this.heroes.next(r.list.sort(order((h) => h.name, 'Asc')))),
         tap((r) => this.heroHashLookup.next(this.mapHeroHashes(r.list)))
       )
@@ -67,7 +69,7 @@ export class HeroState {
   getHeroDetails(hashid: string) {
     fromFetch(`./api/hero/${hashid}`)
       .pipe(
-        HandleRequest<GetHeroResponse>(),
+        handleRequest<GetHeroResponse>(),
         tap((r) => this.heroDetails.next(r.hero)),
         tap((r) => this.heroAbilities.next(r.abilities))
       )

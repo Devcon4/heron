@@ -1,6 +1,6 @@
 import { catchError, Observable, switchMap } from 'rxjs';
 
-export function HandleRequest<T>() {
+export function handleRequest<T>() {
   return (source: Observable<Response>) => {
     return source.pipe(
       switchMap((r) => {
